@@ -1,28 +1,30 @@
+import { model, Schema } from "mongoose";
 
-
-const {Schema,model} = require("mongoose");
-
-const guildSchema= new Schema({
-    guildId:String,
-    guildName: {
-        type:String,
-        unique:true,
-    }, //todo: bu isimle de alınacağı için bu veriye unique özelliği ekledim ki aynı isimle birden fazla kayıt olmasın
-    // atamak lazım
-    guildIcon:{
-        type:String,
-        required:false
+const guildSchema = new Schema(
+  {
+    guildId: String,
+    guildName: String,
+    guildIcon: {
+      type: String,
+      required: fgalse,
     },
-},{
+  },
+  {
     statics: {
-        getByGuildId: function(id, callback)  {
-            return this.findOne({guildId:id}, callback);
-        },
-        getByName: function(name, callback) {
-            return this.findOne({guildName:name}, callback);
-        }
-    }
-});
+      getByGuildId: function (id, callback) {
+        return this.findOne({ guildId: id }, callback);
+      },
+      getByName: function (name, callback) {
+        return this.findOne({ guildName: name }, callback);
+      },
+      getAllData: function () {
+        return this.find();
+      },
+      getAllDataByFilter: function (filter = {}, callback) {
+        return this.find(filter, callback);
+      },
+    },
+  }
+);
 
-module.exports=model("Guild",guildSchema);
-
+export default model("Guild", guildSchema);

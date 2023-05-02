@@ -1,6 +1,6 @@
-const { InteractionType } = require("discord.js");
+import { InteractionType } from "discord.js";
 
-module.exports = {
+export default {
   name: "interactionCreate",
   async execute(interaction, client) {
     if (interaction.isChatInputCommand()) {
@@ -20,16 +20,16 @@ module.exports = {
       }
     } else if (interaction.isButton()) {
       const { buttons, logger } = client;
-      const { customId } = interaction;
+      const [customId, roleId] = interaction.customId.split("-");
       const button = buttons.get(customId);
       if (!button) return new Error("Bu düğme için bir işlev ayarlanmamış.");
 
       try {
-        await button.execute(interaction, client);
+        await button.execute(interaction, client, roleId);
       } catch (error) {
         logger.error(error);
       }
-    } else if (interaction.isSelectMenu()) {
+    } else if (interaction.isStringSelectMenu()) {
       const { selectMenus, logger } = client;
       const { customId } = interaction;
       const menu = selectMenus.get(customId);
@@ -42,12 +42,12 @@ module.exports = {
       }
     } else if (interaction.type == InteractionType.ModalSubmit) {
       const { modals } = client;
-      const { customId } = interaction;
+      const [customId, roleId] = interaction.customId.split("-");
       const modal = modals.get(customId);
       if (!modal) return new Error("Bu modal için kod yazılmamış.");
 
       try {
-        await modal.execute(interaction, client);
+        await modal.execute(interaction, client, roleId);
       } catch (error) {
         console.error(error);
       }

@@ -1,6 +1,6 @@
-module.exports={
-    name:"connecting",
-    execute(client){
-        client.logger.info("Veritabanı: bağlanıyor");
-    },
+export default {
+  name: "connecting",
+  execute(client) {
+    client.logger.info("Veritabanı: bağlanıyor");
+  },
 };
