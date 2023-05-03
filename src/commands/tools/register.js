@@ -7,12 +7,15 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 
+import { Guild } from "#models/guild.js";
+
 export default {
   data: new SlashCommandBuilder()
     .setName("kayıtol")
     .setDescription("Kayıt ol menüsünü açar."),
 
   async execute(interaction, client) {
+    Guild.getByGuildId(interaction.guildId).execute()
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
       .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek

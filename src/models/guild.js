@@ -16,4 +16,4 @@ const guildSchema = new mongoose.Schema({
         statics: guildStatics
     });
 
-export const Guild = mongoose.model("Guild", guildSchema);
+export const Guild = mongoose.model("Guild2", guildSchema);
